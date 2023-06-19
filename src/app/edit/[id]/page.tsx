@@ -1,16 +1,39 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { prisma } from "@/db";
+import Form from "@/components/Form";
 
-const Edit = () => {
-  return <div className="mt-96">Edit kokoko</div>;
+interface EditProps {
+  params: {
+    id: string;
+  };
+}
+type EditType = ({ params }: EditProps) => Promise<JSX.Element | void>;
+
+const Edit: EditType = async ({ params }) => {
+  const example = await prisma.example.findUnique({ where: { id: params.id } });
+
+  console.log(example);
+
+  return <Form example={example}></Form>;
 };
 
 export async function generateStaticParams() {
   const examples = await prisma.example.findMany();
-  console.log(examples);
 
   return examples.map((example) => ({ id: example.id }));
 }
+
+// export const getStaticProps = async ({ params }) => {
+//   const { id } = params;
+//   const example = await prisma.example.findUnique({ where: id });
+
+//   return {
+//     props: {
+//       id,
+//       example
+//     }
+//   };
+// };
 
 export default Edit;

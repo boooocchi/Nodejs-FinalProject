@@ -3,12 +3,22 @@ import React from "react";
 import { News_Cycle } from "@next/font/google";
 import { FaRegPaperPlane } from "react-icons/fa";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
+import { FiEdit2 } from "react-icons/fi";
+import { Jomhuria } from "@next/font/google";
+import { authConfig } from "../../../lib/auth";
+import { getServerSession } from "next-auth";
 
+const jomhuria = Jomhuria({
+  subsets: ["latin"],
+  weight: ["400"]
+});
 const cycle = News_Cycle({
   subsets: ["latin"],
   weight: ["400"]
 });
-const page = () => {
+const page = async () => {
   const createEx = async (data: FormData) => {
     "use server";
 
@@ -37,11 +47,23 @@ const page = () => {
 
     redirect("/");
   };
+
   return (
     <form
       className={`mx-auto mt-[8rem]  flex h-[500px] w-4/5 flex-col gap-5 ${cycle.className}`}
       action={createEx}
     >
+      <Link href="/">
+        <BsArrowLeft className="text-[1.5rem] hover:text-light"></BsArrowLeft>
+      </Link>
+      <div className="flex items-center justify-center">
+        <h1
+          className={`text-center text-[3rem] text-blueblack ${jomhuria.className}`}
+        >
+          New
+        </h1>
+        <FiEdit2 className="relative bottom-1 ml-2 text-[1.3rem]"></FiEdit2>
+      </div>
       <div className="flex gap-5">
         <input
           placeholder="Word"

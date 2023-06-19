@@ -8,10 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blueblack: "#333",
+        blueblack: "#555",
         rich: "#6967ED",
         light: "#8b89e9f6",
-        slategray: "rgb(100, 110, 110)"
+        slategray: "rgb(100, 110, 110)",
+        accent: "#E9D314"
+      },
+      fontFamily: {
+        cycle: ["var(--font-cycle)"]
       }
     },
     screens: {

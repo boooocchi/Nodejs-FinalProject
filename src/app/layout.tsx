@@ -1,9 +1,20 @@
 import "./globals.css";
-import { Jomhuria } from "@next/font/google";
+import { Jomhuria, News_Cycle } from "@next/font/google";
 import Link from "next/link";
 import logo from "../../public/logo.png";
 import Image from "next/image";
+import { GoogleSignInButton } from "@/components/authButton";
+import { AuthLogoutBtn } from "@/components/authLogoutBtn";
+import { CiSearch } from "react-icons/ci";
+// import { useAuth } from "../../utils/session";
+import { getServerSession } from "next-auth";
+import { authConfig } from "../../lib/auth";
 
+const cycle = News_Cycle({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-cycle"
+});
 const jomhuria = Jomhuria({
   subsets: ["latin"],
   weight: ["400"]
@@ -14,42 +25,94 @@ export const metadata = {
     "Website where you can share words and example sentence of them with al the English learner out there"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authConfig);
+
   return (
-    <html lang="en">
+    <html lang="en" className={`${cycle.variable}`}>
       <body className={`relative ${jomhuria.className}`}>
-        <header className="fixed top-0 h-[4.5rem] w-full bg-gray-100 shadow-md"></header>
-        <div className="flex">
-          <div className="relative h-screen w-[17rem] bg-[#8b89e9f6]">
-            <div className="absolute left-0 top-0 flex h-[4.5rem] w-full items-center justify-center bg-[#6967ED] text-[3rem] text-white">
-              <span className="relative top-1 flex items-center tracking-wide ">
-                Sharex.{" "}
+        <header className="fixed top-0 z-[99] flex h-[4.5rem] w-full items-center  bg-gray-100 pr-[3rem] shadow-md">
+          <ul className="flex w-full items-center justify-between">
+            <div className="relative left-0 flex h-[4.5rem] min-w-[15rem] items-center justify-center bg-[#6967ED] text-[3rem] text-white">
+              <span className="relative top-1 flex items-center tracking-wide">
+                <span className="drop-shadow-md">Sharex. </span>
                 <Image className="mb-1 ml-1 h-9 w-9" src={logo} alt="" />
               </span>
             </div>
-            <ul className="absolute left-[3rem] top-[7rem] flex flex-col gap-5 text-[2.3rem] text-white">
-              <li>
-                <Link href="">Feed</Link>
-              </li>
-              <li>
-                <Link href="">Mine</Link>
-              </li>
-              <li>
-                <Link href="">Account</Link>
-              </li>
+            <div className="ml-[5rem] flex items-center">
+              <input
+                className="h-10 w-[15rem] rounded-full bg-white px-4 font-cycle text-[.9rem] shadow-sm"
+                type="text"
+                placeholder="Search Ex."
+              />
+              <button className="ml-[-2.4rem] flex h-[2rem] w-[2rem]  items-center justify-center rounded-full bg-rich py-1 text-[1.3rem] text-white hover:bg-light">
+                <CiSearch></CiSearch>
+              </button>
+            </div>
+            {session?.user?.image ? (
+              <div className="group ml-auto flex cursor-pointer items-center rounded-full bg-accent py-1 pl-2 pr-4 shadow-md hover:bg-white">
+                <img
+                  src={session.user?.image}
+                  alt=""
+                  className="h-10 w-10 rounded-full "
+                />
+                <span className="relative bottom-[2px] ml-1 font-cycle text-[0.9rem] text-white drop-shadow-md group-hover:text-accent group-hover:drop-shadow-none">
+                  Hello, {session.user?.name?.split(" ")[0]}
+                </span>
+              </div>
+            ) : (
+              <GoogleSignInButton></GoogleSignInButton>
+            )}
+          </ul>
+        </header>
+        <div className="flex justify-center">
+          <div className="relative z-[97] h-full min-h-screen w-[15rem] min-w-[15rem] bg-light ">
+            <ul className="absolute left-0 top-[7rem] flex w-full flex-col gap-5 text-[2.3rem] text-white">
+              <Link
+                href="/"
+                className="transition-color group relative flex h-[3rem] w-full items-center duration-200 hover:bg-rich"
+              >
+                <span className="ml-[3.5rem] mt-[10px] inline-block drop-shadow-md">
+                  Feed
+                </span>
+                <div
+                  className="group-hover:opacity-1  absolute right-0 top-0
+  h-0 w-0
+  translate-x-[100%] border-b-[24px] border-l-[15px]  border-t-[24px] border-b-transparent border-l-transparent border-t-transparent transition duration-200 group-hover:border-l-rich"
+                ></div>
+              </Link>
+              <Link
+                href="/"
+                className="flex h-[3rem] w-full items-center hover:bg-rich"
+              >
+                <span className="ml-[3.5rem] mt-[10px] inline-block drop-shadow-md">
+                  Mine
+                </span>
+              </Link>
+              <Link
+                href="/"
+                className="flex h-[3rem] w-full items-center hover:bg-rich"
+              >
+                <span className="ml-[3.5rem] mt-[10px] inline-block drop-shadow-md">
+                  Account
+                </span>
+              </Link>
+              {session?.user && <AuthLogoutBtn></AuthLogoutBtn>}
             </ul>
           </div>
-          <div className="w-full px-[5rem]">{children}</div>
-          <Link
-            href="/new"
-            className="absolute bottom-[5%] right-[3%]  flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#6967ED] text-[2.5rem] font-light text-white shadow-lg hover:bg-light"
-          >
-            <span className=" relative top-[2px]">+</span>
-          </Link>
+          <div className="w-full pl-[5rem] pr-[3.5rem]">{children}</div>
+          {session?.user && (
+            <Link
+              href="/new"
+              className="absolute bottom-[5%] right-[3%]  flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#6967ED] text-[2.5rem] font-light text-white shadow-lg hover:bg-light"
+            >
+              <span className=" relative top-[2px]">+</span>
+            </Link>
+          )}
         </div>
       </body>
     </html>
