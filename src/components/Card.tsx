@@ -21,6 +21,7 @@ const Card: React.FC<{
   exSentence: string;
 }> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [addedFavorite, setAddedFavorite] = useState(false);
   const cardClass = isOpen
     ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-5 shadow-md left-[45%] top-[28%]  z-10 hover:bottom-1"
     : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-5 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform";
@@ -39,7 +40,7 @@ const Card: React.FC<{
   };
   const closeButton = (
     <div
-      className="z-99 absolute right-[-20%] top-[-80%] flex h-[1.8rem] w-[1.8rem] cursor-pointer items-center justify-center rounded-full text-white hover:bg-[#6967ED] hover:shadow-md"
+      className="z-99 absolute right-[-22%] top-[-125%] flex h-[1.8rem] w-[1.8rem] cursor-pointer items-center justify-center rounded-full text-white hover:bg-[#6967ED] hover:shadow-md"
       onClick={(e) => {
         e.stopPropagation();
         setIsOpen(false);
@@ -52,7 +53,8 @@ const Card: React.FC<{
     e.preventDefault();
     console.log(props.id);
     fetch(`/api/example?id=${props.id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      next: { revalidate: 0 }
     })
       .then((response) => {
         if (response.ok) {
@@ -63,16 +65,48 @@ const Card: React.FC<{
       })
       .catch((error) => {
         console.error("Network error:", error);
+      })
+      .finally(() => {
+        router.push("/");
+        setIsOpen(false);
       });
+  };
+  // toggleLike: protectedProcedure
+  //   .input(z.object({ id: z.string() }))
+  //   .mutation(async ({ input: { id }, ctx }) => {
+  //     const data = { tweetId: id, userId: ctx.session.user.id };
+  //     const existingLike = await ctx.prisma.like.findUnique({
+  //       where: { userId_tweetId: data },
+  //     });
+  //     if (existingLike == null) {
+  //       await ctx.prisma.like.create({ data });
+  //       return { addedLike: true };
+  //     } else {
+  //       await ctx.prisma.like.delete({ where: { userId_tweetId: data } });
+  //       return { addedLike: false };
+  //     }
+  //   }),
+  const favoriteHandler = async () => {
+    const data = { exampleId: props.id, userId: props.userId };
+    const existingFavorite = await fetch("/api/favorite", {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+    const { addedFavorite } = await existingFavorite.json();
+    console.log(addedFavorite);
+    setAddedFavorite(addedFavorite);
   };
 
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-10 bg-[rgba(1,1,1,0.3)]"></div>
+        <div
+          className="fixed inset-0 z-10 bg-[rgba(1,1,1,0.3)]"
+          onClick={() => setIsOpen(false)}
+        ></div>
       )}
       <div className={cardClass} onClick={openHandler}>
-        <h1 className="relative text-center text-[2.5rem] text-slategray">
+        <h1 className="relative text-center text-[2.5rem] leading-[2rem] text-slategray">
           {props.word}
           {isOpen && closeButton}
         </h1>
@@ -96,8 +130,13 @@ const Card: React.FC<{
         </p>
         {isOpen && (
           <div className="mt-auto flex gap-2 self-end">
-            <span className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light">
-              <MdFavorite></MdFavorite>
+            <span
+              className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem]  shadow-lg hover:bg-light"
+              onClick={favoriteHandler}
+            >
+              <MdFavorite
+                className={`${addedFavorite ? "text-accent" : "text-white"}`}
+              ></MdFavorite>
             </span>
             <span
               // href={`/edit/${props.id}`}

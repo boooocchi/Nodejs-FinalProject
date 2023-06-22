@@ -15,7 +15,7 @@ module.exports = {
         accent: "#E9D314"
       },
       fontFamily: {
-        cycle: ["var(--font-cycle)", "Bold"]
+        cycle: ["var(--font-cycle)"]
       }
     },
     screens: {

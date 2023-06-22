@@ -9,10 +9,13 @@ export const AuthLogoutBtn = () => {
   };
   return (
     <div
-      className="z-[100] ml-[3.5rem] mt-[1rem] cursor-pointer text-[1.6rem] text-white hover:text-rich"
+      className="z-[100] ml-[3.5rem] mt-[1rem] cursor-pointer text-[1.6rem] text-white drop-shadow-md "
       onClick={handleLogout}
     >
-      <BiLogOutCircle></BiLogOutCircle>
+      <BiLogOutCircle
+        className="hover:text-rich"
+        onClick={handleLogout}
+      ></BiLogOutCircle>
     </div>
   );
 };

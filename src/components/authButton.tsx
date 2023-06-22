@@ -1,15 +1,11 @@
 "use client";
 
 import { AiFillGoogleCircle } from "react-icons/ai";
-import { getSession, signIn } from "next-auth/react";
-// import { useSession } from "next-auth/react";
-import { authConfig } from "../../lib/auth";
+import { signIn } from "next-auth/react";
 
 export function GoogleSignInButton() {
-  // const { data: session } = useSession();
-  const handleClick = async () => {
+  const handleClick = () => {
     signIn("google");
-    // console.log("/////////////", result);
   };
 
   return (

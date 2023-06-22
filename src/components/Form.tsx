@@ -9,7 +9,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { Jomhuria } from "@next/font/google";
 import { News_Cycle } from "@next/font/google";
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 // import { updateEx } from "../updateEx";
 // Form.tsx
 
@@ -32,8 +32,6 @@ const jomhuria = Jomhuria({
   subsets: ["latin"],
   weight: ["400"]
 });
-
-export const revalidate=0;
 const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
   example
 }) => {
@@ -71,8 +69,10 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
       })
       .catch((error) => {
         console.error("Network error:", error);
+      })
+      .finally(() => {
+        router.push("/");
       });
-    // router.push("/");
   };
 
   return (

@@ -1,10 +1,9 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/db";
-import { NextResponse } from "next/server";
-
+import { redirect } from "next/navigation";
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const feedUrl = new URL("/", req.url);
+
   const hi = await prisma.example.update({
     where: { id: body.id },
     data: {
@@ -13,17 +12,17 @@ export async function POST(req: NextRequest) {
       exSentence: body.exSentence
     }
   });
-  return NextResponse.redirect(feedUrl);
 }
 
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const exId = searchParams.get("id");
-  const feedUrl = new URL("/", req.url);
 
-  const hi = await prisma.example.delete({
-    where: { id: exId?.toString() }
-  });
-  // redirect("/");
-  return NextResponse.redirect(feedUrl);
+  const hi = await prisma.example
+    .delete({
+      where: { id: exId?.toString() }
+    })
+    .finally(() => {
+      redirect("/");
+    });
 }

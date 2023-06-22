@@ -9,6 +9,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { Jomhuria } from "@next/font/google";
 import { authConfig } from "../../../lib/auth";
 import { getServerSession } from "next-auth";
+
 const jomhuria = Jomhuria({
   subsets: ["latin"],
   weight: ["400"]
@@ -22,7 +23,7 @@ const page = async () => {
   const createEx = async (data: FormData) => {
     "use server";
     const session = await getServerSession(authConfig);
-
+    console.log("///////", session?.user?.id);
     const word = data.get("word")?.valueOf();
     const exSentence = data.get("exSentence")?.valueOf();
     const phoneticSign = data.get("phoneticSign")?.valueOf();
@@ -42,7 +43,7 @@ const page = async () => {
         word,
         phoneticSign,
         exSentence,
-        userId: "2b80569f-4df1-42b5-8d1e-fd985d2a2aa0"
+        userId: session?.user?.id
       }
     });
 

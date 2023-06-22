@@ -19,8 +19,8 @@ model User{
   id  String @id @default(uuid())
   name String
   email String @unique
-  password String?
   examples Example[]
+  favorites Favorite[]
 
 }
 
@@ -32,6 +32,18 @@ model Example{
   phoneticSign String?
   exSentence String 
   user User @relation(fields:[userId],references: [id],onDelete: Cascade)
-
+  favorite Favorite[]
 
 }
+
+model Favorite{
+  userId String
+  exampleId String
+  user User @relation(fields:[userId],references: [id],onDelete:Cascade)
+  example Example @relation(fields:[exampleId], references: [id], onDelete:Cascade)
+
+@@id([userId,exampleId])
+  @@index([userId])
+  @@index([exampleId])
+}
+
