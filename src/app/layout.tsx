@@ -33,15 +33,10 @@ export default async function RootLayout({
     <html lang="en" className={`${cycle.variable}`}>
       <body className={`relative ${jomhuria.className}`}>
         <NextAuthProvider>
-          {/* @ts-expect-error Server Component */}
-
           <NavigationBar />
           <div className="flex justify-center">
-            {/* @ts-expect-error Server Component */}
-
             <SideMenu />
             <div className="w-full pl-[5rem] pr-[3.5rem]">{children}</div>
-            {/* @ts-expect-error Server Component */}
             <NewButton />
           </div>
         </NextAuthProvider>
