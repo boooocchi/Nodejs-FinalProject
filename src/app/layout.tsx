@@ -8,6 +8,7 @@ import NavigationBar from "@/components/NavigationBar";
 import { NextAuthProvider } from "./providers";
 import SideMenu from "@/components/SideMenu";
 import NewButton from "@/components/NewButton";
+import { prisma } from "@/db";
 
 const cycle = News_Cycle({
   subsets: ["latin"],
@@ -25,10 +26,17 @@ export const metadata = {
 };
 
 export default async function RootLayout({
-  children
+  children,
+  params
 }: {
   children: React.ReactNode;
+  params: {
+    newData: any;
+  };
 }) {
+  const examples = await prisma.example.findMany();
+  params.newData = examples;
+
   return (
     <html lang="en" className={`${cycle.variable}`}>
       <body className={`relative ${jomhuria.className}`}>
