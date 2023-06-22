@@ -28,6 +28,9 @@ import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authConfig: NextAuthOptions = {
+  pages: {
+    signIn: "/"
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -51,8 +54,7 @@ export const authConfig: NextAuthOptions = {
         const userData = await prisma.user.create({
           data: {
             name: session.user?.name || "",
-            email: session.user?.email || "",
-            password: ""
+            email: session.user?.email || ""
           }
         });
         userId = userData.id;
