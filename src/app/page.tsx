@@ -5,16 +5,24 @@ import Link from "next/link";
 import { authConfig } from "../../lib/auth";
 import { getServerSession } from "next-auth";
 
-// id String @id @default(uuid())
-// userId String
-// createdAt DateTime @default(now())
-// word String
-// phoneticSign String?
-// exSentence String
-// user User @relation(fields:[userId],references: [id],onDelete: Cascade)
-
 const page = async () => {
   const session = await getServerSession(authConfig);
+
+  if (session?.user) {
+    const user = await prisma.user.findUnique({
+      where: { email: session?.user?.email || undefined }
+    });
+
+    if (!user) {
+      const userData = await prisma.user.create({
+        data: {
+          name: session.user.name || "",
+          email: session.user.email || "",
+          password: ""
+        }
+      });
+    }
+  }
 
   const examples = await prisma.example.findMany();
 

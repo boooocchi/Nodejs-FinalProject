@@ -10,6 +10,7 @@ interface EditProps {
 }
 type EditType = ({ params }: EditProps) => Promise<JSX.Element | void>;
 
+export const revalidate = 0;
 const Edit: EditType = async ({ params }) => {
   const example = await prisma.example.findUnique({ where: { id: params.id } });
 

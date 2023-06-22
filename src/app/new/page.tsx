@@ -9,7 +9,6 @@ import { FiEdit2 } from "react-icons/fi";
 import { Jomhuria } from "@next/font/google";
 import { authConfig } from "../../../lib/auth";
 import { getServerSession } from "next-auth";
-
 const jomhuria = Jomhuria({
   subsets: ["latin"],
   weight: ["400"]
@@ -18,9 +17,11 @@ const cycle = News_Cycle({
   subsets: ["latin"],
   weight: ["400"]
 });
+
 const page = async () => {
   const createEx = async (data: FormData) => {
     "use server";
+    const session = await getServerSession(authConfig);
 
     const word = data.get("word")?.valueOf();
     const exSentence = data.get("exSentence")?.valueOf();

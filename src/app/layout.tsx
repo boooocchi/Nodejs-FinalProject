@@ -9,10 +9,12 @@ import { CiSearch } from "react-icons/ci";
 // import { useAuth } from "../../utils/session";
 import { getServerSession } from "next-auth";
 import { authConfig } from "../../lib/auth";
+import { redirect } from "next/navigation";
+import { prisma } from "@/db";
 
 const cycle = News_Cycle({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "700"],
   variable: "--font-cycle"
 });
 const jomhuria = Jomhuria({
@@ -32,6 +34,19 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authConfig);
 
+  const searchEx = async (data: FormData) => {
+    "use server";
+    const word = data.get("word")?.valueOf();
+
+    redirect(`/searchresult/${word}`);
+  };
+  const accountHandler = async () => {
+    "use server";
+    const user = await prisma.user.findUnique({
+      where: { email: session?.user?.email || undefined }
+    });
+    redirect(`/profiles/${user?.id}`);
+  };
   return (
     <html lang="en" className={`${cycle.variable}`}>
       <body className={`relative ${jomhuria.className}`}>
@@ -43,16 +58,20 @@ export default async function RootLayout({
                 <Image className="mb-1 ml-1 h-9 w-9" src={logo} alt="" />
               </span>
             </div>
-            <div className="ml-[5rem] flex items-center">
+            <form className="ml-[5rem] flex items-center" action={searchEx}>
               <input
                 className="h-10 w-[15rem] rounded-full bg-white px-4 font-cycle text-[.9rem] shadow-sm"
                 type="text"
                 placeholder="Search Ex."
+                name="word"
               />
-              <button className="ml-[-2.4rem] flex h-[2rem] w-[2rem]  items-center justify-center rounded-full bg-rich py-1 text-[1.3rem] text-white hover:bg-light">
+              <button
+                className="ml-[-2.4rem] flex h-[2rem] w-[2rem]  items-center justify-center rounded-full bg-rich py-1 text-[1.3rem] text-white hover:bg-light"
+                type="submit"
+              >
                 <CiSearch></CiSearch>
               </button>
-            </div>
+            </form>
             {session?.user?.image ? (
               <div className="group ml-auto flex cursor-pointer items-center rounded-full bg-accent py-1 pl-2 pr-4 shadow-md hover:bg-white">
                 <img
@@ -60,7 +79,7 @@ export default async function RootLayout({
                   alt=""
                   className="h-10 w-10 rounded-full "
                 />
-                <span className="relative bottom-[2px] ml-1 font-cycle text-[0.9rem] text-white drop-shadow-md group-hover:text-accent group-hover:drop-shadow-none">
+                <span className="relative bottom-[2px] ml-2 font-cycle text-[0.9rem] text-white drop-shadow-md group-hover:text-accent group-hover:drop-shadow-none">
                   Hello, {session.user?.name?.split(" ")[0]}
                 </span>
               </div>
@@ -93,14 +112,11 @@ export default async function RootLayout({
                   Mine
                 </span>
               </Link>
-              <Link
-                href="/"
-                className="flex h-[3rem] w-full items-center hover:bg-rich"
-              >
+              <div className="flex h-[3rem] w-full items-center hover:bg-rich">
                 <span className="ml-[3.5rem] mt-[10px] inline-block drop-shadow-md">
                   Account
                 </span>
-              </Link>
+              </div>
               {session?.user && <AuthLogoutBtn></AuthLogoutBtn>}
             </ul>
           </div>

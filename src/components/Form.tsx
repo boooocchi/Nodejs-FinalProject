@@ -32,6 +32,8 @@ const jomhuria = Jomhuria({
   subsets: ["latin"],
   weight: ["400"]
 });
+
+export const revalidate=0;
 const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
   example
 }) => {
