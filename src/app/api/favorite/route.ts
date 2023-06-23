@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log("........", body);
 
   const existingLike = await prisma.favorite.findUnique({
     where: { userId_exampleId: body }

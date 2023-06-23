@@ -2,20 +2,15 @@ import { GoogleSignInButton } from "@/components/authButton";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { CiSearch } from "react-icons/ci";
 
 import logo from "../../public/logo.png";
 import { authConfig } from "../../lib/auth";
 import { redirect } from "next/navigation";
+import SearchInput from "@/components/SearchInput"
 
 export default async function NavigationBar() {
   const session = await getServerSession(authConfig);
-  const searchEx = async (data: FormData) => {
-    "use server";
-    const word = data.get("word")?.valueOf();
-
-    redirect(`/searchresult/${word}`);
-  };
+  
   return (
     <header className="fixed top-0 z-[99] flex h-[4.5rem] w-full items-center  bg-gray-100 pr-[3rem] shadow-md">
       <ul className="flex w-full items-center justify-between">
@@ -25,20 +20,8 @@ export default async function NavigationBar() {
             <Image className="mb-1 ml-1 h-9 w-9" src={logo} alt="" />
           </span>
         </div>
-        <form className="ml-[5rem] flex items-center" action={searchEx}>
-          <input
-            className="h-10 w-[15rem] rounded-full bg-white px-4 font-cycle text-[.9rem] shadow-sm"
-            type="text"
-            placeholder="Search Ex."
-            name="word"
-          />
-          <button
-            className="ml-[-2.4rem] flex h-[2rem] w-[2rem]  items-center justify-center rounded-full bg-rich py-1 text-[1.3rem] text-white hover:bg-light"
-            type="submit"
-          >
-            <CiSearch></CiSearch>
-          </button>
-        </form>
+
+        <SearchInput></SearchInput>
         {session?.user?.image ? (
           <div className="group ml-auto flex cursor-pointer items-center rounded-full bg-accent py-1 pl-2 pr-4 shadow-md hover:bg-white">
             <img

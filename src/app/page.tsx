@@ -1,6 +1,6 @@
-"use client";
+
 import React, { useState } from "react";
-import Card from "@/components/Card";
+import CardContainer from "@/components/CardContainer"
 import Link from "next/link";
 
 import NavigationBar from "@/components/NavigationBar";
@@ -15,12 +15,9 @@ import NavigationBar from "@/components/NavigationBar";
 
 export const revalidate = 0;
 
-const page = (props: any) => {
-  const [examples, setExamples] = useState(props.params.newData);
-  console.log(examples);
+const page = () => {
   return (
     <>
-    
       <div className="relative mt-[7rem] flex w-full items-center justify-between">
         <div className="absolute left-[-80px] top-[0px] h-0 w-0 border-b-[24px] border-l-[15px] border-t-[24px] border-b-transparent border-l-light border-t-transparent"></div>
         <div>
@@ -48,11 +45,8 @@ const page = (props: any) => {
           </span>
         </div>
       </div>
-      <div className="relative mt-[3rem] grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-md:grid-cols-2 xl:grid-cols-4">
-        {examples.map((example) => {
-          return <Card {...example}></Card>;
-        })}
-      </div>
+      <CardContainer></CardContainer>
+      
     </>
   );
 };

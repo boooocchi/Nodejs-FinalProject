@@ -49,8 +49,7 @@ const Card: React.FC<{
       <span className="relative top-[2px] text-[2.2rem]">×</span>
     </div>
   );
-  const deleteHandler = async (e: any) => {
-    e.preventDefault();
+  const deleteHandler = async () => {
     console.log(props.id);
     fetch(`/api/example?id=${props.id}`, {
       method: "DELETE",

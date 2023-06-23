@@ -1,14 +1,12 @@
 import "./globals.css";
 import { Jomhuria, News_Cycle } from "@next/font/google";
 
-// import { useAuth } from "../../utils/session";
-import { getServerSession } from "next-auth";
-import { authConfig } from "../../lib/auth";
 import NavigationBar from "@/components/NavigationBar";
 import { NextAuthProvider } from "./providers";
 import SideMenu from "@/components/SideMenu";
 import NewButton from "@/components/NewButton";
 import { prisma } from "@/db";
+import DataProvider from "./dataProvider";
 
 const cycle = News_Cycle({
   subsets: ["latin"],
@@ -44,7 +42,9 @@ export default async function RootLayout({
           <NavigationBar />
           <div className="flex justify-center">
             <SideMenu />
-            <div className="w-full pl-[5rem] pr-[3.5rem]">{children}</div>
+            <DataProvider>
+              <div className="w-full pl-[5rem] pr-[3.5rem]">{children}</div>
+            </DataProvider>
             <NewButton />
           </div>
         </NextAuthProvider>
