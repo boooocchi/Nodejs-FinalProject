@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { News_Cycle } from "@next/font/google";
 import { FiEdit2 } from "react-icons/fi";
 import { MdFavorite, MdDelete } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { DataContext } from "@/app/dataProvider";
 
 const cycle = News_Cycle({
   subsets: ["latin"],
   weight: ["400"]
 });
+interface Favorite {
+  userId: string;
+  exampleId: string;
+}
 
 const Card: React.FC<{
   id: string;
@@ -19,19 +25,20 @@ const Card: React.FC<{
   word: string;
   phoneticSign: string | null;
   exSentence: string;
+  favorite?: Favorite[];
 }> = (props) => {
+  const { getExamples, getFavExamples } = useContext(DataContext);
+  const session = useSession();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [addedFavorite, setAddedFavorite] = useState(false);
+  const [addedFavorite, setAddedFavorite] = useState(null);
   const cardClass = isOpen
-    ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-5 shadow-md left-[45%] top-[28%]  z-10 hover:bottom-1"
-    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-5 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform";
+    ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md left-[45%] top-[28%]  z-10 hover:bottom-1"
+    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform";
   const openHandler = () => {
     setIsOpen(true);
   };
 
-  // const closeHandler = () => {
-  //   setIsOpen(false);
-  // };
   const router = useRouter();
 
   const editHandler = (e: any) => {
@@ -50,7 +57,6 @@ const Card: React.FC<{
     </div>
   );
   const deleteHandler = async () => {
-    console.log(props.id);
     fetch(`/api/example?id=${props.id}`, {
       method: "DELETE",
       next: { revalidate: 0 }
@@ -66,35 +72,33 @@ const Card: React.FC<{
         console.error("Network error:", error);
       })
       .finally(() => {
-        router.push("/");
-        setIsOpen(false);
+        getExamples();
+        setTimeout(() => {
+          setIsOpen(false);
+        }, 500);
       });
   };
-  // toggleLike: protectedProcedure
-  //   .input(z.object({ id: z.string() }))
-  //   .mutation(async ({ input: { id }, ctx }) => {
-  //     const data = { tweetId: id, userId: ctx.session.user.id };
-  //     const existingLike = await ctx.prisma.like.findUnique({
-  //       where: { userId_tweetId: data },
-  //     });
-  //     if (existingLike == null) {
-  //       await ctx.prisma.like.create({ data });
-  //       return { addedLike: true };
-  //     } else {
-  //       await ctx.prisma.like.delete({ where: { userId_tweetId: data } });
-  //       return { addedLike: false };
-  //     }
-  //   }),
+
   const favoriteHandler = async () => {
-    const data = { exampleId: props.id, userId: props.userId };
+    const data = { exampleId: props.id, userId: session?.data?.user?.id };
     const existingFavorite = await fetch("/api/favorite", {
       method: "POST",
       body: JSON.stringify(data)
     });
     const { addedFavorite } = await existingFavorite.json();
-    console.log(addedFavorite);
+
     setAddedFavorite(addedFavorite);
   };
+
+  let heartClass;
+  const favoriteArr = props.favorite?.filter((row) => {
+    return row?.userId === session.data?.user?.id;
+  });
+  if (addedFavorite === null) {
+    heartClass = favoriteArr?.length !== 0 ? "text-accent" : "text-white";
+  } else {
+    heartClass = addedFavorite ? "text-accent" : "text-white";
+  }
 
   return (
     <>
@@ -109,16 +113,16 @@ const Card: React.FC<{
           {props.word}
           {isOpen && closeButton}
         </h1>
-        {props.phoneticSign && (
-          <h2 className="relative ">
-            <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#D964E3] align-middle leading-[1.2rem]">
-              {" "}
-            </span>
-            <span className={`relative ${cycle.className} top-[1px]`}>
-              {props.phoneticSign}
-            </span>
-          </h2>
-        )}
+
+        <h2 className="relative ">
+          <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#D964E3] align-middle leading-[1.2rem]">
+            {" "}
+          </span>
+          <span className={`relative ${cycle.className} top-[1px]`}>
+            {props.phoneticSign}
+          </span>
+        </h2>
+
         <p className={`relative ${cycle.className}`}>
           <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#f8f427] align-middle leading-[1.2rem]">
             {" "}
@@ -129,28 +133,35 @@ const Card: React.FC<{
         </p>
         {isOpen && (
           <div className="mt-auto flex gap-2 self-end">
-            <span
-              className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem]  shadow-lg hover:bg-light"
-              onClick={favoriteHandler}
-            >
-              <MdFavorite
-                className={`${addedFavorite ? "text-accent" : "text-white"}`}
-              ></MdFavorite>
-            </span>
-            <span
-              // href={`/edit/${props.id}`}
-              className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
-              onClick={editHandler}
-            >
-              <FiEdit2></FiEdit2>
-            </span>
-            <span
-              // href={`/edit/${props.id}`}
-              className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
-              onClick={deleteHandler}
-            >
-              <MdDelete></MdDelete>
-            </span>
+            {session.status === "authenticated" && (
+              <span
+                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem]  shadow-lg hover:bg-light"
+                onClick={favoriteHandler}
+              >
+                {}
+                <MdFavorite className={heartClass}></MdFavorite>
+              </span>
+            )}
+
+            {session?.data?.user?.id === props.userId && (
+              <span
+                // href={`/edit/${props.id}`}
+                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
+                onClick={editHandler}
+              >
+                <FiEdit2></FiEdit2>
+              </span>
+            )}
+
+            {session?.data?.user?.id === props.userId && (
+              <span
+                // href={`/edit/${props.id}`}
+                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
+                onClick={deleteHandler}
+              >
+                <MdDelete></MdDelete>
+              </span>
+            )}
           </div>
         )}
       </div>

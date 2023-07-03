@@ -1,14 +1,8 @@
-
-import React, { useState } from "react";
-import CardContainer from "@/components/CardContainer"
+import React from "react";
+import CardContainer from "@/components/CardContainer";
 import Link from "next/link";
-
-import NavigationBar from "@/components/NavigationBar";
-
-
-export const revalidate = 0;
-
-const page = () => {
+const page = ({ params }: any) => {
+  const { id } = params;
   return (
     <>
       <div className="relative mt-[7rem] flex w-full items-center justify-between">
@@ -38,8 +32,7 @@ const page = () => {
           </span>
         </div>
       </div>
-      <CardContainer></CardContainer>
-      
+      <CardContainer userId={id}></CardContainer>
     </>
   );
 };

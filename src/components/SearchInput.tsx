@@ -1,16 +1,22 @@
 "use client";
 import { DataContext } from "@/app/dataProvider";
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const SearchInput = () => {
+  const [inputValue, setInputValue] = useState("");
   const keywordRef = useRef<HTMLInputElement>(null);
   const { searchExamples } = useContext(DataContext);
   console.log(searchExamples);
-  const searchEx = () => {
-    const keyword = keywordRef?.current?.value || null;
+  const searchEx = (e: any) => {
+    e.preventDefault();
+    const keyword = keywordRef?.current?.value || "";
     console.log(keyword);
     searchExamples(keyword);
+    setInputValue("");
+  };
+  const onChangeHandler = () => {
+    setInputValue(keywordRef?.current?.value || "");
   };
   return (
     <form className="ml-[5rem] flex items-center" onSubmit={searchEx}>
@@ -20,6 +26,8 @@ const SearchInput = () => {
         placeholder="Search Ex."
         name="keyword"
         ref={keywordRef}
+        value={inputValue}
+        onChange={onChangeHandler}
       />
       <button className="ml-[-2.4rem] flex h-[2rem] w-[2rem]  items-center justify-center rounded-full bg-rich py-1 text-[1.3rem] text-white hover:bg-light">
         <CiSearch></CiSearch>

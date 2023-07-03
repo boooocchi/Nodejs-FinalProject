@@ -26,16 +26,8 @@ export default async function SideMenu() {
   translate-x-[100%] border-b-[24px] border-l-[15px]  border-t-[24px] border-b-transparent border-l-transparent border-t-transparent transition duration-200 group-hover:border-l-rich"
           ></div>
         </Link>
-        <Link
-          as={"/"}
-          href="/"
-          className="flex h-[3rem] w-full items-center hover:bg-rich"
-        >
-          <span className="ml-[3.5rem] mt-[10px] inline-block drop-shadow-md">
-            Mine
-          </span>
-        </Link>
-        <Button>Account</Button>
+        <Button pageName="favorites">Favorite</Button>
+        <Button pageName="profiles">Account</Button>
         {session?.user && <AuthLogoutBtn></AuthLogoutBtn>}
       </ul>
     </div>

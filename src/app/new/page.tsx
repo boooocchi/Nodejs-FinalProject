@@ -23,7 +23,6 @@ const page = async () => {
   const createEx = async (data: FormData) => {
     "use server";
     const session = await getServerSession(authConfig);
-    console.log("///////", session?.user?.id);
     const word = data.get("word")?.valueOf();
     const exSentence = data.get("exSentence")?.valueOf();
     const phoneticSign = data.get("phoneticSign")?.valueOf();
