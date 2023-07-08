@@ -7,7 +7,9 @@ export async function updateEx(id: any, values: any) {
     where: { id: id },
     data: {
       word: values.word,
+      meaning: values.meaning,
       phoneticSign: values.phoneticSign,
+
       exSentence: values.exSentence
     }
   });

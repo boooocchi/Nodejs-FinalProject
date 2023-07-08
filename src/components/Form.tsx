@@ -19,6 +19,7 @@ interface FormProps {
     userId: string;
     createdAt: Date;
     word: string;
+    meaning: string;
     phoneticSign: string | null;
     exSentence: string;
   } | null;
@@ -42,6 +43,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
 
   const [values, setValues] = useState({
     word: example?.word,
+    meaning: example?.meaning,
     phoneticSign: example?.phoneticSign || "",
     exSentence: example?.exSentence
   });
@@ -92,7 +94,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
         <FiEdit2 className="relative bottom-1 ml-2 text-[1.3rem]"></FiEdit2>
       </div>
 
-      <div className="flex gap-5">
+      <div className="flex gap-2">
         <input
           placeholder="Word"
           className="grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
@@ -105,7 +107,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
 
         <input
           placeholder="Phonetic sign"
-          className="grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
+          className="w-auto grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
           type="text"
           name="phoneticSign"
           value={values.phoneticSign}
@@ -113,6 +115,15 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
           onChange={valueHandler}
         />
       </div>
+      <input
+        placeholder="Meaning"
+        className="grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
+        type="text"
+        name="meaning"
+        value={values.meaning}
+        ref={signRef}
+        onChange={valueHandler}
+      />
       <textarea
         placeholder="Example senteces"
         className="h-[15rem] rounded-xl border-2 p-3  text-[1.1rem]"

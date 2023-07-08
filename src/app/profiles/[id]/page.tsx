@@ -17,10 +17,9 @@ const ProfilePage = async ({ params }: any) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <div className="absolute left-[-80px] top-[0px] h-0 w-0 border-b-[24px] border-l-[15px] border-t-[24px] border-b-transparent border-l-light border-t-transparent"></div>
-
         <div className="mt-[8rem]   overflow-hidden rounded-full border-[3px] border-accent  text-[5rem] shadow-md">
-          <div className="  overflow-hidden rounded-full border-[5px] border-white  text-[5rem] shadow-md">
+          <div className="z-99 fixed left-[240px] top-[248px] h-0 w-0 border-b-[24px] border-l-[15px] border-t-[24px] border-b-transparent border-l-light border-t-transparent max-md:hidden"></div>
+          <div className="overflow-hidden rounded-full border-[5px] border-white  text-[5rem] shadow-md">
             <img
               src={imageSrc}
               alt="profile image"

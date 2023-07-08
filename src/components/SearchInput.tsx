@@ -19,7 +19,7 @@ const SearchInput = () => {
     setInputValue(keywordRef?.current?.value || "");
   };
   return (
-    <form className="ml-[5rem] flex items-center" onSubmit={searchEx}>
+    <form className="ml-[3.5rem] flex items-center" onSubmit={searchEx}>
       <input
         className="h-10 w-[15rem] rounded-full bg-white px-4 font-cycle text-[.9rem] shadow-sm"
         type="text"

@@ -29,6 +29,7 @@ model Example{
   userId String
   createdAt DateTime @default(now())
   word String 
+  meaning String
   phoneticSign String?
   exSentence String 
   user User @relation(fields:[userId],references: [id],onDelete: Cascade)

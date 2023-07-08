@@ -20,7 +20,10 @@ const jomhuria = Jomhuria({
 export const metadata = {
   title: "Share your example sentence",
   description:
-    "Website where you can share words and example sentence of them with al the English learner out there"
+    "Website where you can share words and example sentence of them with al the English learner out there",
+  icons: {
+    icon: "@/public/logo.ico"
+  }
 };
 
 export default async function RootLayout({
@@ -36,14 +39,19 @@ export default async function RootLayout({
   params.newData = examples;
 
   return (
-    <html lang="en" className={`${cycle.variable}`}>
+    <html lang="en" className={`${cycle.variable} min-w-[330px]`}>
+      {/* <head>
+        <link rel="icon" href="/logo.ico" />
+      </head> */}
       <body className={`relative ${jomhuria.className}`}>
         <NextAuthProvider>
           <DataProvider>
             <NavigationBar />
-            <div className="flex justify-center">
+            <div className="flex min-h-screen  justify-center">
               <SideMenu />
-              <div className="w-full pl-[5rem] pr-[3.5rem]">{children}</div>
+              <div className="relative mb-[3rem] w-full px-[3.5rem] max-xs:px-[1.5rem] md:ml-[15rem]">
+                {children}
+              </div>
               <NewButton />
             </div>
           </DataProvider>

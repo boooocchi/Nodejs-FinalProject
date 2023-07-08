@@ -10,8 +10,8 @@ export default async function SideMenu() {
   const session = await getServerSession(authConfig);
 
   return (
-    <div className="relative z-[97] h-full min-h-screen w-[15rem] min-w-[15rem] bg-light ">
-      <ul className="absolute left-0 top-[7rem] flex w-full flex-col gap-5 text-[2.3rem] text-white">
+    <div className="fixed left-0 z-[97] min-h-screen  w-[15rem] min-w-[15rem] bg-light max-md:hidden">
+      <ul className="absolute  left-0 top-[7rem] flex w-full flex-col gap-5 text-[2.3rem] text-white">
         <Link
           as={"/"}
           href="/"
@@ -26,8 +26,12 @@ export default async function SideMenu() {
   translate-x-[100%] border-b-[24px] border-l-[15px]  border-t-[24px] border-b-transparent border-l-transparent border-t-transparent transition duration-200 group-hover:border-l-rich"
           ></div>
         </Link>
-        <Button pageName="favorites">Favorite</Button>
-        <Button pageName="profiles">Account</Button>
+        <Button pageName="favorites" pixel="68">
+          Favorite
+        </Button>
+        <Button pageName="profiles" pixel="130">
+          Account
+        </Button>
         {session?.user && <AuthLogoutBtn></AuthLogoutBtn>}
       </ul>
     </div>

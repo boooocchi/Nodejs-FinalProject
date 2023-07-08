@@ -35,7 +35,7 @@ const CardContainer: React.FC<CardContainerProps> = ({ userId }) => {
           </div>
         </div>
       )}
-      <div className="relative mt-[2rem] grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-md:grid-cols-2 xl:grid-cols-4">
+      <div className=" mt-[2rem] grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-md:grid-cols-2 max-xs:grid-cols-1 xl:grid-cols-4">
         {!isLoading &&
           data &&
           data.map((row: any) => {

@@ -23,6 +23,7 @@ const Card: React.FC<{
   userId: string;
   createdAt: Date;
   word: string;
+  meaning: string;
   phoneticSign: string | null;
   exSentence: string;
   favorite?: Favorite[];
@@ -33,7 +34,7 @@ const Card: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const [addedFavorite, setAddedFavorite] = useState(null);
   const cardClass = isOpen
-    ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md left-[45%] top-[28%]  z-10 hover:bottom-1"
+    ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  left-1/2 transform -translate-x-1/2 md:-translate-x-[8%] top-[28%]  z-10 hover:bottom-1"
     : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform";
   const openHandler = () => {
     setIsOpen(true);
@@ -120,6 +121,14 @@ const Card: React.FC<{
           </span>
           <span className={`relative ${cycle.className} top-[1px]`}>
             {props.phoneticSign}
+          </span>
+        </h2>
+        <h2 className="relative ">
+          <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#55cfe7] align-middle leading-[1.2rem]">
+            {" "}
+          </span>
+          <span className={`relative ${cycle.className} top-[1px]`}>
+            {props.meaning}
           </span>
         </h2>
 
