@@ -3,6 +3,7 @@ import CardContainer from "@/components/CardContainer";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import NavigationBar from "@/components/NavigationBar";
+import DataSortButton from "@/components/dataSortButton";
 
 export const revalidate = 0;
 
@@ -15,15 +16,8 @@ const page = async () => {
         <div className="fixed left-[240px] top-[112px] h-0 w-0 border-b-[24px] border-l-[15px] border-t-[24px] border-b-transparent border-l-light border-t-transparent max-md:hidden"></div>
         <div>
           <ul className="flex gap-2">
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem] ">
-              <span className="translate-y-[-2px]">Date</span>
-            </button>
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem]">
-              <span className="">Word</span>
-            </button>
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem]">
-              <span className="">User</span>
-            </button>
+            <DataSortButton sortKeyword="createdAt">Date</DataSortButton>
+            <DataSortButton sortKeyword="word">Word</DataSortButton>
           </ul>
         </div>
         {session?.user && (

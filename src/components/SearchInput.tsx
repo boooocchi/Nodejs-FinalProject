@@ -7,11 +7,9 @@ const SearchInput = () => {
   const [inputValue, setInputValue] = useState("");
   const keywordRef = useRef<HTMLInputElement>(null);
   const { searchExamples } = useContext(DataContext);
-  console.log(searchExamples);
   const searchEx = (e: any) => {
     e.preventDefault();
     const keyword = keywordRef?.current?.value || "";
-    console.log(keyword);
     searchExamples(keyword);
     setInputValue("");
   };

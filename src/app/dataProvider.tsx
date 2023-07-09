@@ -4,7 +4,7 @@ import { createContext } from "react";
 
 export const DataContext = createContext<{
   searchExamples: (keyword: string | "") => void;
-  getExamples: () => void;
+  getExamples: (sortKeyword?: string, sortMethod?: string) => void;
   getFavExamples: (keyword: string | "") => void;
   data: Example[];
   isLoading: boolean;
@@ -59,10 +59,18 @@ export default function DataProvider({
     keyword && setIsSearched(keyword);
     setIsLoading(false);
   };
-  const getHandler = async () => {
-    const res = await fetch("/api/data", {
-      method: "GET"
-    });
+  const getHandler = async (sortKeyword?: string, sortOrder?: string) => {
+    let res;
+    if (!sortKeyword) {
+      res = await fetch("/api/data", {
+        method: "GET"
+      });
+    } else {
+      res = await fetch("/api/sort", {
+        method: "POST",
+        body: JSON.stringify({ method: sortKeyword, order: sortOrder })
+      });
+    }
     const data = await res.json();
     setExamples(data);
     setIsSearched("");

@@ -94,10 +94,10 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
         <FiEdit2 className="relative bottom-1 ml-2 text-[1.3rem]"></FiEdit2>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-[2%]">
         <input
           placeholder="Word"
-          className="grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
+          className="w-[49%] rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
           type="text"
           name="word"
           value={values.word}
@@ -107,7 +107,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
 
         <input
           placeholder="Phonetic sign"
-          className="w-auto grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
+          className=" w-[49%] rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
           type="text"
           name="phoneticSign"
           value={values.phoneticSign}
@@ -117,7 +117,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
       </div>
       <input
         placeholder="Meaning"
-        className="grow rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
+        className="rounded-xl border-2 px-3 text-[1rem] leading-[2.5rem]"
         type="text"
         name="meaning"
         value={values.meaning}

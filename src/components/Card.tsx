@@ -34,8 +34,8 @@ const Card: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const [addedFavorite, setAddedFavorite] = useState(null);
   const cardClass = isOpen
-    ? "fixed border-gray flex h-[23rem] w-[20rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  left-1/2 transform -translate-x-1/2 md:-translate-x-[8%] top-[28%]  z-10 hover:bottom-1"
-    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform";
+    ? "fixed border-gray flex h-[27rem] w-[22rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  left-1/2 transform -translate-x-1/2 md:-translate-x-[8%] top-[23%]  z-10 hover:bottom-1 "
+    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform overflow-hidden";
   const openHandler = () => {
     setIsOpen(true);
   };
@@ -105,17 +105,17 @@ const Card: React.FC<{
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-10 bg-[rgba(1,1,1,0.3)]"
+          className="fixed inset-0 z-10  bg-[rgba(1,1,1,0.3)]"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
       <div className={cardClass} onClick={openHandler}>
-        <h1 className="relative text-center text-[2.5rem] leading-[2rem] text-slategray">
+        <h1 className="relative text-center  text-[2.6rem] leading-[2rem] text-slategray">
           {props.word}
           {isOpen && closeButton}
         </h1>
 
-        <h2 className="relative ">
+        <h2 className="relative mt-5">
           <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#D964E3] align-middle leading-[1.2rem]">
             {" "}
           </span>
@@ -124,54 +124,67 @@ const Card: React.FC<{
           </span>
         </h2>
         <h2 className="relative ">
-          <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#55cfe7] align-middle leading-[1.2rem]">
+          <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#f8f427] align-middle leading-[1.2rem]">
             {" "}
           </span>
-          <span className={`relative ${cycle.className} top-[1px]`}>
+          <span
+            className={`relative ${cycle.className} top-[1px] leading-[.9rem]`}
+          >
             {props.meaning}
           </span>
         </h2>
 
-        <p className={`relative ${cycle.className}`}>
-          <span className="mr-2 inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#f8f427] align-middle leading-[1.2rem]">
-            {" "}
-          </span>
-          <span className="relative top-[1px] leading-[0.rem]">
-            {props.exSentence}
-          </span>
-        </p>
         {isOpen && (
-          <div className="mt-auto flex gap-2 self-end">
-            {session.status === "authenticated" && (
-              <span
-                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem]  shadow-lg hover:bg-light"
-                onClick={favoriteHandler}
-              >
-                {}
-                <MdFavorite className={heartClass}></MdFavorite>
-              </span>
-            )}
+          <>
+            <div className={`relative mb-5 mt-7`}>
+              <h3 className=" text-[2rem] font-[400] leading-[1rem] tracking-normal  text-slategray">
+                &nbsp;Ex. sentences
+              </h3>
+              {props.exSentence.split("\n").map((line, num) => {
+                return (
+                  <div key={num} className="mt-2 font-cycle">
+                    <span className="mr-2  inline-block h-[0.6rem] w-[0.6rem] rounded-full bg-[#55cfe7] align-middle leading-[1.5rem]">
+                      {" "}
+                    </span>
 
-            {session?.data?.user?.id === props.userId && (
-              <span
-                // href={`/edit/${props.id}`}
-                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
-                onClick={editHandler}
-              >
-                <FiEdit2></FiEdit2>
-              </span>
-            )}
+                    <span className="relative top-[1px] ">{line}</span>
+                    <br></br>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-auto flex gap-2 self-end">
+              {session.status === "authenticated" && (
+                <span
+                  className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem]  shadow-lg hover:bg-light"
+                  onClick={favoriteHandler}
+                >
+                  {}
+                  <MdFavorite className={heartClass}></MdFavorite>
+                </span>
+              )}
 
-            {session?.data?.user?.id === props.userId && (
-              <span
-                // href={`/edit/${props.id}`}
-                className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
-                onClick={deleteHandler}
-              >
-                <MdDelete></MdDelete>
-              </span>
-            )}
-          </div>
+              {session?.data?.user?.id === props.userId && (
+                <span
+                  // href={`/edit/${props.id}`}
+                  className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
+                  onClick={editHandler}
+                >
+                  <FiEdit2></FiEdit2>
+                </span>
+              )}
+
+              {session?.data?.user?.id === props.userId && (
+                <span
+                  // href={`/edit/${props.id}`}
+                  className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
+                  onClick={deleteHandler}
+                >
+                  <MdDelete></MdDelete>
+                </span>
+              )}
+            </div>
+          </>
         )}
       </div>
     </>

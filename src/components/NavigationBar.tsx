@@ -13,9 +13,9 @@ export default async function NavigationBar() {
   const session = await getServerSession(authConfig);
 
   return (
-    <header className="shadow-md: fixed top-0 z-[99] flex h-[4.5rem]  w-full items-center bg-gray-100 pr-[3rem] max-md:bg-rich max-xs:pr-[1.5rem]">
+    <header className="shadow-md: fixed top-0 z-[99] flex h-[4.5rem]  w-full items-center bg-gray-100 pr-[1.5rem] max-md:bg-rich xs:pr-[2rem] md:pr-[3rem]">
       <ul className="flex w-full items-center justify-between">
-        <div className="relative left-0 z-[98] flex h-[4.5rem] min-w-[15rem] items-center bg-[#6967ED] pl-[3rem] text-[3rem] text-white max-xs:pl-[1.5rem]">
+        <div className="relative left-0 z-[97] flex h-[4.5rem] min-w-[15rem] items-center bg-[#6967ED]   pl-[1.5rem] text-[3rem] text-white xs:pl-[2rem] md:pl-[3rem]">
           <span className="relative top-1 z-[98] flex items-center tracking-wide">
             <span>
               <SlideinSideMenu></SlideinSideMenu>

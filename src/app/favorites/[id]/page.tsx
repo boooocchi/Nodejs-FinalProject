@@ -1,25 +1,14 @@
 import React from "react";
 import CardContainer from "@/components/CardContainer";
 import Link from "next/link";
+import DataSortButton from "@/components/dataSortButton";
 const page = ({ params }: any) => {
   const { id } = params;
   return (
     <>
-      <div className="relative mt-[7rem] flex w-full items-center justify-between">
+      <div className="relative mt-[7rem] flex w-full items-center justify-end">
         <div className="fixed left-[240px]  top-[180px] h-0 w-0 border-b-[24px] border-l-[15px] border-t-[24px] border-b-transparent border-l-light border-t-transparent max-md:hidden"></div>
-        <div>
-          <ul className="flex gap-2">
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem] ">
-              <span className="translate-y-[-2px]">Date</span>
-            </button>
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem]">
-              <span className="">Word</span>
-            </button>
-            <button className="rounded-full border border-rich px-3 py-1 text-center font-cycle text-[.9rem]">
-              <span className="">User</span>
-            </button>
-          </ul>
-        </div>
+
         <div className="flex items-center">
           <Link
             href="/new"
