@@ -1,0 +1,5 @@
+{
+  "build": {
+    "commands": ["npm install", "npx dotenv -- npm run vercel-build"]
+  }
+}
