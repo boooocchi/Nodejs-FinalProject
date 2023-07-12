@@ -47,7 +47,7 @@ const page = async () => {
         meaning,
         phoneticSign,
         exSentence,
-        userId: session?.user?.id
+        userId: session?.user?.id ?? ""
       }
     });
 
