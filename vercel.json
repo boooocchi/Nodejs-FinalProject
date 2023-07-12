@@ -15,7 +15,7 @@
     { "src": "/.*", "dest": "index.html" }
   ],
   "env": {
-    "DATABASE_URL": "<your-database-url>"
+    "DATABASE_URL": "$DATABASE_URL"
   },
   "build": {
     "env": {
