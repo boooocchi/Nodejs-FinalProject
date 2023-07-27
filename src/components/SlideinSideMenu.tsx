@@ -49,12 +49,16 @@ const SlideinSideMenu = () => {
   translate-x-[100%] border-b-[24px] border-l-[15px]  border-t-[24px] border-b-transparent border-l-transparent border-t-transparent transition duration-200 group-hover:border-l-rich"
             ></div>
           </Link>
-          <Button pageName="favorites" pixel="68">
-            Favorite
-          </Button>
-          <Button pageName="profiles" pixel="130">
-            Account
-          </Button>
+          {session?.status && (
+            <>
+              <Button pageName="favorites" pixel="68">
+                Favorite
+              </Button>
+              <Button pageName="profiles" pixel="130">
+                Account
+              </Button>
+            </>
+          )}
           {session?.status === "authenticated" && (
             <AuthLogoutBtn></AuthLogoutBtn>
           )}
