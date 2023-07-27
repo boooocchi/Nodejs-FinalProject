@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
     where: { id: body.id },
     data: {
       word: body.word,
+      meaning: body.meaning,
       phoneticSign: body.phoneticSign,
       exSentence: body.exSentence
     }

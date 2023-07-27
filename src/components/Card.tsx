@@ -34,18 +34,12 @@ const Card: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const [addedFavorite, setAddedFavorite] = useState(null);
   const cardClass = isOpen
-    ? "fixed border-gray flex h-[27rem] w-[22rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  left-1/2 transform -translate-x-1/2 md:-translate-x-[8%] top-[23%]  z-10 hover:bottom-1 "
-    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md hover:translate-y-[-3%] hover:scale-105 transition-transform overflow-hidden";
+    ? "fixed border-gray flex h-[27rem] w-[22rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  left-1/2 transform -translate-x-1/2 md:-translate-x-[6%] top-[23%]  z-10 hover:bottom-1 "
+    : "border-gray flex h-[15rem] flex-col gap-2 rounded-xl border bg-white px-7 py-7 shadow-md  hover:scale-105  overflow-hidden transform duration-200";
   const openHandler = () => {
     setIsOpen(true);
   };
 
-  const router = useRouter();
-
-  const editHandler = (e: any) => {
-    e.stopPropagation();
-    router.push(`/edit/${props.id}`);
-  };
   const closeButton = (
     <div
       className="z-99 absolute right-[-22%] top-[-125%] flex h-[1.8rem] w-[1.8rem] cursor-pointer items-center justify-center rounded-full text-white hover:bg-[#6967ED] hover:shadow-md"
@@ -165,13 +159,13 @@ const Card: React.FC<{
               )}
 
               {session?.data?.user?.id === props.userId && (
-                <span
+                <Link
                   // href={`/edit/${props.id}`}
                   className="flex h-[1.8rem] w-[1.8rem]  cursor-pointer items-center justify-center rounded-full bg-[#6967ED]  text-[1rem] text-white shadow-lg hover:bg-light"
-                  onClick={editHandler}
+                  href={`/edit/${props.id}`}
                 >
                   <FiEdit2></FiEdit2>
-                </span>
+                </Link>
               )}
 
               {session?.data?.user?.id === props.userId && (

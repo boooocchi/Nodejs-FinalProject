@@ -40,6 +40,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
   const wordRef = useRef(null);
   const signRef = useRef(null);
   const exRef = useRef(null);
+  const meaningRef=useRef(null)
 
   const [values, setValues] = useState({
     word: example?.word,
@@ -121,7 +122,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
         type="text"
         name="meaning"
         value={values.meaning}
-        ref={signRef}
+        ref={meaningRef}
         onChange={valueHandler}
       />
       <textarea

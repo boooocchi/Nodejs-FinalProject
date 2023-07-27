@@ -2,8 +2,6 @@ import React from "react";
 import { prisma } from "@/db";
 import Form from "@/components/Form";
 
-export const revalidate = 0;
-
 interface EditProps {
   params: {
     id: string;
@@ -11,6 +9,7 @@ interface EditProps {
 }
 type EditType = ({ params }: EditProps) => Promise<JSX.Element | void>;
 
+export const revalidate = 1;
 const Edit: EditType = async ({ params }) => {
   const example = await prisma.example.findUnique({ where: { id: params.id } });
 

@@ -8,6 +8,7 @@ import { authConfig } from "../../lib/auth";
 import { redirect } from "next/navigation";
 import SearchInput from "@/components/SearchInput";
 import SlideinSideMenu from "@/components/SlideinSideMenu";
+import Link from "next/link";
 
 export default async function NavigationBar() {
   const session = await getServerSession(authConfig);
@@ -20,18 +21,20 @@ export default async function NavigationBar() {
             <span>
               <SlideinSideMenu></SlideinSideMenu>
             </span>
-            <span className="relative z-[99] drop-shadow-md">Sharex. </span>
-            <Image
-              className="relative z-[99] mb-1 ml-1 h-9 w-9"
-              src={logo}
-              alt=""
-            />
+            <Link className="relative z-[99] flex items-center" href="/">
+              <span className="drop-shadow-md">Sharex.</span>
+              <Image
+                className="relative z-[99] mb-2 ml-1 h-9 w-9"
+                src={logo}
+                alt=""
+              />
+            </Link>
           </span>
         </div>
         <span className="max-md:hidden">
           <SearchInput></SearchInput>
         </span>
-        {session?.user?.image ? (
+        {session?.user ? (
           <div className="group ml-auto flex cursor-pointer items-center rounded-full bg-accent pb-1 pl-1 pr-1 pt-1 shadow-md hover:bg-white max-xs:justify-center xs:pl-2 xs:pr-4">
             <img
               src={session.user?.image}
