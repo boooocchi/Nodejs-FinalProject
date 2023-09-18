@@ -1,10 +1,10 @@
 "use client";
 import React, { MouseEventHandler, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Button from "./Button";
+import Button from "./button/Button";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { AuthLogoutBtn } from "./authLogoutBtn";
+import { GoogleLogoutButton } from "./button/GoogleLogoutButton";
 
 const SlideinSideMenu = () => {
   const session = useSession();
@@ -59,9 +59,7 @@ const SlideinSideMenu = () => {
               </Button>
             </>
           )}
-          {session?.status === "authenticated" && (
-            <AuthLogoutBtn></AuthLogoutBtn>
-          )}
+          {session?.status === "authenticated" && <GoogleLogoutButton />}
         </ul>
       </div>
     </>

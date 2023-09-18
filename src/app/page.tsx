@@ -3,7 +3,8 @@ import CardContainer from "@/components/CardContainer";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import NavigationBar from "@/components/NavigationBar";
-import DataSortButton from "@/components/dataSortButton";
+import DataSortButton from "@/components/button/DataSortButton";
+import NewPostButton from "@/components/button/NewPostButton";
 
 export const revalidate = 0;
 
@@ -20,21 +21,7 @@ const page = async () => {
             <DataSortButton sortKeyword="word">Word</DataSortButton>
           </ul>
         </div>
-        {session?.user && (
-          <div className="flex items-center">
-            <Link
-              href="/new"
-              className="border-3 group flex  h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-rich  bg-white text-[2.5rem] font-light text-rich shadow-md hover:bg-rich"
-            >
-              <span className="relative top-[2px] group-hover:text-white">
-                +
-              </span>
-            </Link>
-            <span className="ml-2 translate-y-[2px] text-2xl text-rich max-xs:hidden">
-              Add New Ex.
-            </span>
-          </div>
-        )}
+        {session?.user && <NewPostButton />}
       </div>
       <CardContainer></CardContainer>
     </>

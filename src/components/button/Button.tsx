@@ -2,8 +2,8 @@
 
 import React, { ReactNode } from "react";
 import Link from "next/link";
-import { useAuth } from "../../utils/session";
-import { SessionWithId } from "../../utils/type";
+import { useAuth } from "../../../utils/session";
+import { SessionWithId } from "../../../utils/type";
 
 const Button = ({
   pageName,

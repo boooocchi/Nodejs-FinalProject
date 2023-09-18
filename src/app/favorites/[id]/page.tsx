@@ -1,7 +1,6 @@
 import React from "react";
 import CardContainer from "@/components/CardContainer";
 import Link from "next/link";
-import DataSortButton from "@/components/dataSortButton";
 const page = ({ params }: any) => {
   const { id } = params;
   return (

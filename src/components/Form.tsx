@@ -9,9 +9,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { Jomhuria } from "@next/font/google";
 import { News_Cycle } from "@next/font/google";
 import { useRef, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
-// import { updateEx } from "../updateEx";
-// Form.tsx
+import { useRouter } from "next/navigation";
 
 interface FormProps {
   example: {
@@ -40,7 +38,7 @@ const Form: React.FC<FormProps & React.HTMLAttributes<HTMLFormElement>> = ({
   const wordRef = useRef(null);
   const signRef = useRef(null);
   const exRef = useRef(null);
-  const meaningRef=useRef(null)
+  const meaningRef = useRef(null);
 
   const [values, setValues] = useState({
     word: example?.word,

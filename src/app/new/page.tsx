@@ -19,9 +19,8 @@ const cycle = News_Cycle({
   weight: ["400"]
 });
 
-const page = async () => {
+const New = async () => {
   const createEx = async (data: FormData) => {
-    "use server";
     const session = await getServerSession(authConfig);
     const word = data.get("word")?.valueOf();
     const exSentence = data.get("exSentence")?.valueOf();
@@ -108,4 +107,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default New;

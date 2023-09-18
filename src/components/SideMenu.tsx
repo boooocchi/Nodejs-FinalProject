@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import { getServerSession } from "next-auth";
 
-import { AuthLogoutBtn } from "@/components/authLogoutBtn";
+import { GoogleLogoutButton } from "@/components/button/GoogleLogoutButton";
 import { authConfig } from "../../lib/auth";
-import Button from "./Button";
+import Button from "./button/Button";
 
 export default async function SideMenu() {
   const session = await getServerSession(authConfig);
@@ -36,7 +36,7 @@ export default async function SideMenu() {
             </Button>
           </>
         )}
-        {session?.user && <AuthLogoutBtn></AuthLogoutBtn>}
+        {session?.user && <GoogleLogoutButton />}
       </ul>
     </div>
   );

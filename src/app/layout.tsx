@@ -2,11 +2,10 @@ import "./globals.css";
 import { Jomhuria, News_Cycle } from "@next/font/google";
 
 import NavigationBar from "@/components/NavigationBar";
-import { NextAuthProvider } from "./providers";
 import SideMenu from "@/components/SideMenu";
-import NewButton from "@/components/NewButton";
 import { prisma } from "@/db";
 import DataProvider from "./dataProvider";
+import { NextAuthProvider } from "./SessionProvider";
 
 const cycle = News_Cycle({
   subsets: ["latin"],
@@ -37,7 +36,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${cycle.variable} min-w-[330px]`}>
-     
       <body className={`relative ${jomhuria.className}`}>
         <NextAuthProvider>
           <DataProvider>
@@ -47,7 +45,6 @@ export default async function RootLayout({
               <div className="relative mb-[3rem] w-full px-[3.5rem] max-xs:px-[1.5rem] md:ml-[15rem]">
                 {children}
               </div>
-              <NewButton />
             </div>
           </DataProvider>
         </NextAuthProvider>

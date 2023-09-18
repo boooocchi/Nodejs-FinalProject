@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 import { BiLogOutCircle } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 
-export const AuthLogoutBtn = () => {
+export const GoogleLogoutButton = () => {
   const router = useRouter();
 
   const handleLogout = async () => {

@@ -1,9 +1,6 @@
 "use client";
 import React, { useContext, useState } from "react";
-
 import { DataContext } from "@/app/dataProvider";
-import { spawn } from "child_process";
-import { FaGlasses } from "react-icons/fa";
 
 interface DataSortButtonProps {
   children: React.ReactNode;
@@ -19,8 +16,7 @@ const DataSortButton: React.FC<DataSortButtonProps> = ({
   const [isClicked, setIsClicked] = useState(false);
 
   const sortHandler = (sortKeyword: string) => {
-    setIsClicked(true);
-    let sortOrder;
+    let sortOrder = "desc";
     setSortMethod((prev) => !prev);
     if (sortMethod) {
       sortOrder = "asc";
@@ -36,7 +32,7 @@ const DataSortButton: React.FC<DataSortButtonProps> = ({
     >
       <span className="">
         {children}
-        {isClicked && <>{sortMethod ? <span>↑</span> : <span>↓</span>}</>}
+        <>{sortMethod ? <span>↑</span> : <span>↓</span>}</>
       </span>
     </button>
   );

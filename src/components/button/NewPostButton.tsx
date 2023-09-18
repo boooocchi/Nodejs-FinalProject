@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authConfig } from "../../lib/auth";
+// import { getServerSession } from "next-auth";
+// import { authConfig } from "../../../lib/auth";
 
-export default async function NewButton() {
-  const session = await getServerSession(authConfig);
-
-  return session?.user ? (
+export default async function NewPostButton() {
+  return (
     <Link
       as={"/new"}
       href="/new"
@@ -13,5 +11,5 @@ export default async function NewButton() {
     >
       <span className=" relative top-[2px]">+</span>
     </Link>
-  ) : null;
+  );
 }

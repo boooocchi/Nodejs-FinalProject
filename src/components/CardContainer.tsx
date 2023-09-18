@@ -7,8 +7,14 @@ interface CardContainerProps {
   userId?: string;
 }
 const CardContainer: React.FC<CardContainerProps> = ({ userId }) => {
-  const { data, isLoading, getExamples, getFavExamples, searched } =
-    useContext(DataContext);
+  const {
+    data,
+    isLoading,
+    getExamples,
+    getFavExamples,
+    searched,
+    setIsSearched
+  } = useContext(DataContext);
   useEffect(() => {
     if (userId) {
       getFavExamples(userId);
@@ -20,10 +26,21 @@ const CardContainer: React.FC<CardContainerProps> = ({ userId }) => {
   return (
     <>
       {searched !== "" && (
-        <h2 className="mt-[2rem] font-cycle text-[1rem]">
-          search keyword:{" "}
-          <span className="text-[1.1rem] font-bold">{searched}</span>
-        </h2>
+        <div className="flex items-center mt-[2rem] ">
+          <h2 className="font-cycle text-[1rem]">
+            search keyword:{" "}
+            <span className="text-[1.1rem] font-bold mr-3">{searched}</span>
+          </h2>
+          <button
+            className="rounded-full bg-rich text-white h-5 w-5 flex items-center justify-center"
+            onClick={() => {
+              setIsSearched("");
+              getExamples();
+            }}
+          >
+            ×
+          </button>
+        </div>
       )}
       {isLoading && (
         <div className="mt-[3rem] flex w-full justify-center">

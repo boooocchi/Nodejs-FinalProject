@@ -9,13 +9,15 @@ export const DataContext = createContext<{
   data: Example[];
   isLoading: boolean;
   searched: string;
+  setIsSearched: React.Dispatch<React.SetStateAction<string>>;
 }>({
   searchExamples: () => {},
   getExamples: () => {},
   getFavExamples: () => {},
   data: [],
   isLoading: true,
-  searched: ""
+  searched: "",
+  setIsSearched: () => {}
 });
 type Example = {
   id: string;
@@ -84,8 +86,8 @@ export default function DataProvider({
     });
     const data = await res.json();
 
-    const filteredData = data.filter((item: any) =>
-      item.favorite?.some((fav: any) => fav.userId === userId)
+    const filteredData = data.filter(
+      (item: any) => item.favorite?.some((fav: any) => fav.userId === userId)
     );
     setExamples(filteredData);
 
@@ -100,7 +102,8 @@ export default function DataProvider({
         getFavExamples: getFavHandler,
         data: examples,
         isLoading: isLoading,
-        searched: isSearched
+        searched: isSearched,
+        setIsSearched
       }}
     >
       {children}
